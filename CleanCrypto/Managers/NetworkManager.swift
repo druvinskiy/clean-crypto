@@ -10,10 +10,12 @@ import UIKit
 class NetworkManager {
     
     static let shared = NetworkManager()
-    private let baseUrl = "https://api.coingecko.com/api/v3/"
+    private var baseUrl: String
     let cache = NSCache<NSString, UIImage>()
     
-    private init() {}
+    private init(baseUrl: String = "https://api.coingecko.com/api/v3/") {
+        self.baseUrl = baseUrl
+    }
     
     func getTrendingCoinsWithDetails(completed: @escaping (Result<[Coin], CCError>) -> Void) {
         getTrendingCoins { [weak self] (result: Result<[Coin], CCError>) in
@@ -76,15 +78,15 @@ class NetworkManager {
         
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             guard let self = self,
-                error == nil,
-                let response = response as? HTTPURLResponse, response.statusCode == 200,
-                let data = data,
-                let image = UIImage(data: data) else {
-                    completed(nil)
-                    return
-                }
+                  error == nil,
+                  let response = response as? HTTPURLResponse, response.statusCode == 200,
+                  let data = data,
+                  let image = UIImage(data: data) else {
+                      completed(nil)
+                      return
+                  }
             
-
+            
             self.cache.setObject(image, forKey: cacheKey)
             completed(image)
         }

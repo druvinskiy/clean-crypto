@@ -26,11 +26,7 @@ class Item: Codable {
     let large: String
     let slug: String
     let priceBtc: Double
-    var priceUsd = 0.0 {
-        didSet {
-            priceUsd = round(priceUsd * 100) / 100.0
-        }
-    }
+    var priceUsd = 0.0
     let score: Int
     var description = ""
 

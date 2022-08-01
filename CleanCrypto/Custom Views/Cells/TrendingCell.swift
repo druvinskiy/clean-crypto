@@ -26,7 +26,7 @@ class TrendingCell: UITableViewCell {
         nameLabel.text = item.name
         coinImageView.downloadImage(fromURL: item.large)
         symbolLabel.text = item.symbol
-        priceLabel.text = "$\(item.priceUsd.formatted(.currency(code: "%.2f")))"
+        priceLabel.text = "\(item.priceUsd.formatted(.currency(code: "USD")))"
     }
     
     private func configure() {
